@@ -1,0 +1,10 @@
+* STATA Code for running the example on meta-analytic data set of 19 studies on perinatal death * in post-term pregnancy comparing selective with routine induction
+* data file is perinatal_death.dth  
+*
+use "perinatal_death.dta"
+* Poisson model
+poisson deaths treatment i.study_long, exposure(at_risk) irr
+* conditional binomial model
+melogit deathssi, offset(log_r) binomial(sum_deaths) or
+* Mantel-Haenszel analysis
+ir deaths treatment at_risk, by(study_long) 
